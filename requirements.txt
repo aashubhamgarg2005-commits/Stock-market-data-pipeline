@@ -1,0 +1,10 @@
+requests
+kafka-python
+python-dotenv
+finnhub-python
+pandas
+pyspark
+pyarrow
+apache-airflow-providers-apache-kafka
+apache-airflow-providers-apache-spark
+psycopg2-binary
