@@ -1,6 +1,14 @@
-FROM apache/spark:4.0.0
+FROM apache/spark:python3
 
 USER root
+
+RUN curl -L \
+    https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.5.0/hadoop-aws-3.5.0.jar \
+    -o /opt/spark/jars/hadoop-aws-3.5.0.jar
+
+RUN curl -L \
+    https://repo1.maven.org/maven2/software/amazon/awssdk/bundle/2.31.63/bundle-2.31.63.jar \
+    -o /opt/spark/jars/bundle-2.31.63.jar
 
 ENV PYTHONUNBUFFERED=1
 
@@ -10,4 +18,4 @@ COPY spark/requirement.txt /tmp/requirements.txt
 
 RUN python3 -m pip install --no-cache-dir -r /tmp/requirements.txt
 
-COPY spark/ /opt/spark/
+COPY spark /app

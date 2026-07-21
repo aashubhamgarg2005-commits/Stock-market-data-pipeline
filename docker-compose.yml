@@ -60,12 +60,33 @@ services:
       retries: 15
       start_period: 30s
 
-  producer:
+  rest-producer:
     build:
       context: .
       dockerfile: docker/producer/Dockerfile
+      
 
-    container_name: producer
+    container_name: rest-producer
+    command: python /producer/rest_producer.py
+
+    env_file:
+      - .env
+
+    environment:
+      PYTHONUNBUFFERED: "1"
+
+    depends_on:
+      minio:
+       condition: service_healthy
+      
+    restart: "no"
+  
+  ws-producer:
+    build: 
+      context: .
+      dockerfile: docker/producer/Dockerfile
+    container_name: ws-producer
+    command: python /producer/websocket_producer.py
 
     env_file:
       - .env
@@ -78,26 +99,43 @@ services:
       kafka:
         condition: service_healthy
 
-    restart: "no"
+    restart: unless-stopped
 
-  spark:
+  spark-batch:
     build:
       context: .
       dockerfile: docker/spark/Dockerfile
-
-    container_name: spark
+    
+    environment:
+       PYTHONPATH: /app:/app/spark
+    container_name: spark-batch
 
     depends_on:
-      kafka:
-        condition: service_healthy
-
+      - minio
+      - postgres
     volumes:
-      - ./storage:/data
+      - .:/app
+    # Full path pass karein
+    command: /opt/spark/bin/spark-submit /app/spark/batch/batch_job.py
 
-    command: tail -f /dev/null
-
-    restart: unless-stopped
-
+  spark-stream:
+    build: 
+      context: .
+      dockerfile: docker/spark/Dockerfile
+    container_name: spark-streaming
+    environment:
+      PYTHONPATH: /app:/app/spark
+    env_file:
+      - .env
+    depends_on:
+      - kafka
+      - minio
+      - postgres
+    command: >
+      spark-submit
+      --packages org.apache.spark:spark-sql-kafka-0-10_2.13:4.0.0
+      /app/spark/streaming/streaming_job.py
+    
   airflow:
     build:
       context: .
@@ -142,11 +180,30 @@ services:
     ports:
       - "9000:9000"
       - "9001:9001"
+    
+    healthcheck:
+      test: ["CMD", "curl","-f","http://localhost:9001/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+      start_period: 30s
 
     volumes:
       - minio-data:/data
 
     restart: unless-stopped
+
+  streamlit:
+    build: 
+      context: .
+      dockerfile: docker/streamlit/Dockerfile
+    container_name: stremlit
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
 
 volumes:
   postgres-data:

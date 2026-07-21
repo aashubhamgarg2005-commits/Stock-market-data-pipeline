@@ -2,3 +2,6 @@ requests
 kafka-python
 python-dotenv
 finnhub-python
+websocket-client
+minio
+pandas
