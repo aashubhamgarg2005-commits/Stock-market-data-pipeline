@@ -453,7 +453,7 @@ Make sure you have the following installed:
 
 1️⃣ Clone the Repository
 
-git clone https://github.com/your-username/real-time-stock-market-pipeline.git
+git clone https://github.com/aashubhamgarg2005-commits/real-time-stock-market-pipeline.git
 
 cd real-time-stock-market-pipeline
 
