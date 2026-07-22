@@ -7,8 +7,12 @@ RUN curl -L \
     -o /opt/spark/jars/hadoop-aws-3.5.0.jar
 
 RUN curl -L \
-    https://repo1.maven.org/maven2/software/amazon/awssdk/bundle/2.31.63/bundle-2.31.63.jar \
-    -o /opt/spark/jars/bundle-2.31.63.jar
+    https://repo1.maven.org/maven2/software/amazon/awssdk/bundle/2.35.4/bundle-2.35.4.jar \
+    -o /opt/spark/jars/bundle-2.35.4.jar
+
+RUN curl -L \
+    https://repo1.maven.org/maven2/software/amazon/s3/analyticsaccelerator/analyticsaccelerator-s3/1.3.1/analyticsaccelerator-s3-1.3.1.jar \
+    -o /opt/spark/jars/analyticsaccelerator-s3-1.3.1.jar
 
 ENV PYTHONUNBUFFERED=1
 

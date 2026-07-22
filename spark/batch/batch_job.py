@@ -7,7 +7,8 @@ def main():
     obj_read = MinioReader(spark=spark)
     try:
         LOGGER.info("Data read ")
-        df = obj_read.read_json(path="s3a://bronze/stock-news/")
+        df = obj_read.read_json(path="s3a://bronze/candles/")
+        print(df)
     except Exception as e:
         LOGGER.error(f"read failed {e}")
 
