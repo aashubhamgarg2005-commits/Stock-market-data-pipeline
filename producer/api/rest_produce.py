@@ -1,4 +1,5 @@
 from .rest_api_client import RestClient
+from .alphavintage_client import AlphavantageClient
 from datetime import datetime
 import time
 from utils.logger import LOGGER
@@ -11,6 +12,7 @@ from config.settings import STOCK_SYMBOLS
 def run_stocks():
     state = StateManager()
     client = RestClient()
+    alphaclient = AlphavantageClient()
 
     from_timestamp = state.get_state()["last_run_timestamp"]
     from_date = state.get_state()["last_run_date"]
@@ -21,9 +23,7 @@ def run_stocks():
         try:
             candles = {}
             LOGGER.info("Start fetch Candles")
-            candles = client.get_candles(symbol=symbol,
-                                            from_timestap=from_timestamp,
-                                            to_timestamp=to_timestamp)
+            candles = alphaclient.get_candles_data(symbol=symbol)
 
         except Exception as e:
             LOGGER.error(f"Fetch Failed: {e}")
@@ -52,7 +52,7 @@ def run_stocks():
         try:
             market_status = {}
             LOGGER.info("start fetch market status")
-            market_status = client.get_market_status(symbol=symbol)
+            market_status = client.get_market_status(exchange = "US")
         except Exception as e:
             LOGGER.info(f"Failed to fetch: {e}")
 

@@ -144,7 +144,11 @@ git clone https://github.com/aashubhamgarg2005-commits/Stock-market-data-pipelin
 cd "Stock market data"
 ```
 
+<<<<<<< HEAD
 Create a local environment file:
+=======
+git clone https://github.com/aashubhamgarg2005-commits/real-time-stock-market-pipeline.git
+>>>>>>> a1c6f69ad3e2e20d31caaf5cc77db8849bddf3dd
 
 ```powershell
 copy .env .env.local

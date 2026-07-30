@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # STOCK MARKET API INFORMATION
-
+ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
+ALPHAVANTAGE_API_URL = os.getenv("ALPHAVANTAGE_URL")
 STOCK_API_KEY = os.getenv("STOCK_API_KEY")
 STOCK_API_URL = os.getenv("STOCK_API_URL")
 STOCK_SYMBOLS = os.getenv("STOCK_SYMBOLS").split(",")

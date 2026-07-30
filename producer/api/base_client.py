@@ -8,7 +8,7 @@ class BaseClient:
         self.base_url = base_url
         self.api_key = api_key
         self.timeout = timeout
-        self.session = requests.session()
+        self.session = requests.Session()
         retry = Retry(
             total = 3,
             backoff_factor = 1,
@@ -18,16 +18,22 @@ class BaseClient:
 
         adepter = HTTPAdapter(max_retries=retry)
         self.session.mount("https://",adapter=adepter)
-        self.session.mount("http:/",adapter=adepter)
+        self.session.mount("http://",adapter=adepter)
         
 
-    def get_request(self,endpoint:str,params=None):
+    def get_request(self,endpoint:str,params=None,auth_params="token"):
+        print("===== DEBUG =====")
+        print("base_url:", self.base_url)
+        print("endpoint:", endpoint)
+        print("api_key:", self.api_key)
         if params is None:
             params = {}
 
         if self.api_key:
-            params["token"] = self.api_key
+            params[auth_params] = self.api_key
+            print(params)
             url = f"{self.base_url}{endpoint}"
+            print(url)
         try:
             response = self.session.get(
                 url=url,
@@ -35,6 +41,7 @@ class BaseClient:
                 timeout= self.timeout
             )
             response.raise_for_status()
+            print(response)
             return response.json()
         except requests.exceptions.Timeout:
             raise Exception("Request Timeout")

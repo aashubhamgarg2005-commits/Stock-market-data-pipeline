@@ -1,19 +1,22 @@
 from api.rest_produce import run_stocks
 import time
-from Minio_client.minio_connection import MiniConnection
+from utils.minio_client import client
 from Minio_client.minio_writer import MinioWritter
 from producer.utils.logger import LOGGER
 from producer.utils.time_manager import StateManager
 
 def main():
-    client = MiniConnection(endpoint="minio:9000",
-                            secret_key="minioadmin",
-                            access_key="minioadmin").get_client()
+    
     writer = MinioWritter(client=client)
     state = StateManager()
     data = run_stocks()
 
     for endpoint,value in data.items():
+        print("=" * 50)
+        print("Endpoint:", endpoint)
+        print("Type:", type(value))
+        print("Value:", value)
+
         writer.create_bucket(bucket_name="bronze")
         writer.write_file(
             bucket_name="bronze",
