@@ -26,19 +26,6 @@ class MinioWritter:
                 content_type = "application/json"
 
             )
-        elif file_format == "parquet":
-            df = pd.DataFrame(data=data)
-            buffer = BytesIO()
-            df.to_parquet(buffer,index=False)
-            buffer.seek(0)
-            self.client.put_object(
-                bucket_name = bucket_name,
-                object_name = f"{object_name}.parquet",
-                data = buffer,
-                legth = buffer.getbuffer().nbytes,
-                content_type = "application/octet-stream"
-
-            )
         else :
             raise ValueError(
                 "Supported formats are: json, parquet"

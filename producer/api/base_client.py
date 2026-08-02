@@ -1,3 +1,5 @@
+from urllib import response
+
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -22,10 +24,6 @@ class BaseClient:
         
 
     def get_request(self,endpoint:str,params=None,auth_params="token"):
-        print("===== DEBUG =====")
-        print("base_url:", self.base_url)
-        print("endpoint:", endpoint)
-        print("api_key:", self.api_key)
         if params is None:
             params = {}
 
@@ -41,7 +39,6 @@ class BaseClient:
                 timeout= self.timeout
             )
             response.raise_for_status()
-            print(response)
             return response.json()
         except requests.exceptions.Timeout:
             raise Exception("Request Timeout")
