@@ -24,7 +24,7 @@ def main():
     spark = spark_session()
     obj_read = MinioReader(spark=spark)
     obj_writter = MinioWritter(client=client)
-    """
+    
     try:
         LOGGER.info("News Data read ")
         news_df = obj_read.read_json(path="s3a://bronze/news/",schema=News_schema)
@@ -107,7 +107,7 @@ def main():
             .mode("overwrite") \
             .parquet("s3a://silver/earnings/")
     except Exception as e:
-        LOGGER.error(f"Cleaning Failed {e}")"""
+        LOGGER.error(f"Cleaning Failed {e}")
 
     try:
         LOGGER.info("Candles Data Read")
@@ -116,7 +116,7 @@ def main():
         finencial_df.show()
         finencial_df.printSchema()
     except Exception as e:
-        LOGGER.error(f"Read Faild {e}")
+        LOGGER.error(f"Read Failed {e}")
 
     try:
         LOGGER.info(" Financial Data Transformation")
