@@ -2,37 +2,57 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler
 
+# ==========================
+# Log Directory
+# ==========================
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
 
 LOG_FILE = os.path.join(LOG_DIR, "stock_pipeline.log")
 
+# ==========================
 # Logger
+# ==========================
 LOGGER = logging.getLogger("stock_pipeline")
 LOGGER.setLevel(logging.INFO)
 
-# Prevent duplicate logs
-LOGGER.handlers.clear()
+# Prevent duplicate handlers
+if LOGGER.hasHandlers():
+    LOGGER.handlers.clear()
 
-# Log format
+# ==========================
+# Formatter
+# ==========================
 formatter = logging.Formatter(
-    "%(asctime)s | %(levelname)s | %(name)s | %(filename)s:%(lineno)d | %(message)s"
+    fmt="%(asctime)s | %(levelname)s | %(name)s | %(filename)s:%(lineno)d | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
 )
 
-# File Handler (5 MB per file, keep last 5 backups)
+# ==========================
+# Console Handler
+# ==========================
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_handler.setFormatter(formatter)
+
+# ==========================
+# File Handler
+# ==========================
 file_handler = RotatingFileHandler(
-    LOG_FILE,
-    maxBytes=5 * 1024 * 1024,
+    filename=LOG_FILE,
+    mode="a",
+    maxBytes=5 * 1024 * 1024,  # 5 MB
     backupCount=5,
     encoding="utf-8"
 )
+file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(formatter)
 
-# Console Handler
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(formatter)
-
-LOGGER.addHandler(file_handler)
+# ==========================
+# Add Handlers
+# ==========================
 LOGGER.addHandler(console_handler)
+LOGGER.addHandler(file_handler)
 
+# Stop propagating to root logger
 LOGGER.propagate = False

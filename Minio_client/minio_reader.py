@@ -6,7 +6,7 @@ class MinioReader():
         self.spark = spark
 
     def read_json(self,path,schema:StructType = None) -> DataFrame:
-        reader = self.spark.read
+        reader = self.spark.read.option("multiLine", True)
         if schema is not None:
             reader = reader.schema(schema)
         return reader.json(path)

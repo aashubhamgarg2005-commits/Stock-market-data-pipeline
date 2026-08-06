@@ -12,11 +12,6 @@ def main():
     data = run_stocks()
 
     for endpoint,value in data.items():
-        print("=" * 50)
-        print("Endpoint:", endpoint)
-        print("Type:", type(value))
-        print("Value:", value)
-
         writer.create_bucket(bucket_name="bronze")
         writer.write_file(
             bucket_name="bronze",

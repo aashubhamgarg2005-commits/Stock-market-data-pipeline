@@ -1,7 +1,6 @@
 from pyspark.sql.types import *
 
-
-News_schema = StructType([
+news_schema = StructType([
     StructField("category",StringType(),True),
     StructField("datetime",LongType(),True),
     StructField("headline",StringType(),True),
@@ -11,5 +10,4 @@ News_schema = StructType([
     StructField("source",StringType(),True),
     StructField("summary",StringType(),True),
     StructField("url",StringType(),True)
-
 ])

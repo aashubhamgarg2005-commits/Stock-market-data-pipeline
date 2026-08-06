@@ -1,6 +1,6 @@
 import json
 from io import BytesIO
-import pandas as pd
+
 
 class MinioWritter:
     def __init__(self,client):
