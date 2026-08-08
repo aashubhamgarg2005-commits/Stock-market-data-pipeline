@@ -12,8 +12,8 @@ def fact_market(market_df):
         )
         .withColumn("market_status",when(col("is_open"),"open")
                     .otherwise("close"))
-        .withColumn("is_regular_session",when(col("session") == "regular","true").
-                   otherwise("false"))
+        .withColumn("is_regular_session",when(col("session") == "regular",True).
+                   otherwise(False))
         .withColumn("market_date",to_date(col("market_time")))
         .withColumn("market_year",year(col("market_time")))
         .withColumn("market_month",month(col("market_time")))

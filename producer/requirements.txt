@@ -5,3 +5,4 @@ finnhub-python
 websocket-client
 minio
 pandas
+python-dotenv
