@@ -1,6 +1,6 @@
-from api.rest_produce import run_stocks
+from producer.api.rest_produce import run_stocks
 import time
-from utils.minio_client import client
+from producer.utils.minio_client import client
 from Minio_client.minio_writer import MinioWritter
 from producer.utils.logger import LOGGER
 from producer.utils.time_manager import StateManager

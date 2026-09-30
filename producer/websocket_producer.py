@@ -7,6 +7,7 @@ from producer.config.settings import (
                                     )
 from producer.config.constants import KAFKA_BROKER_URL,STOCK_QUOTES_TOPIC
 from producer.kafka_client.kafka_handler import kafka_handler
+from producer.kafka_client.kafka_consumer import KafkaConsumerClient
 
 
 def main():
@@ -23,6 +24,7 @@ def main():
     
     # Connect to the WebSocket server
     ws_client.connect()
+
 
 if __name__ == "__main__":
     main()

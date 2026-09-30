@@ -1,6 +1,6 @@
 from .base_client import BaseClient
-from config.settings import ALPHAVANTAGE_API_KEY,ALPHAVANTAGE_API_URL
-from config.settings import STOCK_CANDLES
+from producer.config.settings import ALPHAVANTAGE_API_KEY,ALPHAVANTAGE_API_URL
+from producer.config.settings import STOCK_CANDLES
 
 
 class AlphavantageClient(BaseClient):

@@ -2,9 +2,9 @@ from .rest_api_client import RestClient
 from .alphavintage_client import AlphavantageClient
 from datetime import datetime
 import time
-from utils.logger import LOGGER
-from utils.time_manager import StateManager
-from config.settings import STOCK_SYMBOLS
+from producer.utils.logger import LOGGER
+from producer.utils.time_manager import StateManager
+from producer.config.settings import STOCK_SYMBOLS
 
 
 

@@ -1,4 +1,0 @@
-apache-airflow-providers-apache-kafka
-apache-airflow-providers-apache-spark
-pandas
-psycopg2-binary

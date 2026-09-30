@@ -11,6 +11,7 @@ WEBSOCKET_URL = os.getenv("websocket_url")
 STOCK_API_KEY = os.getenv("STOCK_API_KEY")
 STOCK_API_URL = os.getenv("STOCK_API_URL")
 STOCK_SYMBOLS = os.getenv("STOCK_SYMBOLS").split(",")
+print(f"STOCK_SYMBOLS: {STOCK_SYMBOLS}")
 
 # STOCK MARKET ENDPOINT
 

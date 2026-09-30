@@ -1,13 +1,13 @@
 from .base_client import BaseClient
-from config.settings import STOCK_API_URL,STOCK_API_KEY
-from config.settings import (
+from producer.config.settings import STOCK_API_URL,STOCK_API_KEY
+from producer.config.settings import (
                              STOCK_COMPANY_PROFILE,
                              STOCK_EARNINGS,
                              STOCK_FINENCIAL,
                              STOCK_MARKET_STETUS,
                              STOCK_NEWS,
                                             )
-from utils.logger import LOGGER
+from producer.utils.logger import LOGGER
 
 class RestClient(BaseClient):
     def __init__(self):

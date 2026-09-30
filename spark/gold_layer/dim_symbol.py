@@ -21,9 +21,6 @@ def dim_symbol(candles_df,company_profile,
     ).filter(col("symbol").isNotNull())\
     .filter(trim(col("symbol")) != "")\
     .distinct()
-    print("reduce module:", reduce.__module__)
-    print("reduce:", reduce)
-
 
     symbol_df = symbol_df.withColumn(
         "symbol_id",monotonically_increasing_id() + lit(1)

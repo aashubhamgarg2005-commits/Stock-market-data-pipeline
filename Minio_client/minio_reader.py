@@ -10,7 +10,6 @@ class MinioReader():
         if schema is not None:
             reader = reader.schema(schema)
         return reader.json(path)
-        
 
     def read_parquet(self,path:str) -> DataFrame: 
         return self.spark.read.parquet(path)
