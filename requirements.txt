@@ -1,9 +1,21 @@
-requests
-kafka-python
-python-dotenv
-finnhub-python
-pandas
-pyarrow
-apache-airflow-providers-apache-kafka
-apache-airflow-providers-apache-spark
-psycopg2-binary
+# ==========================================
+# Stock Market Data Pipeline
+# Python 3.12
+# ==========================================
+
+# HTTP / API
+requests==2.32.5
+finnhub-python==2.4.26
+python-dotenv==1.1.1
+
+# Kafka
+kafka-python==2.2.15
+
+# Spark
+pyspark==4.2.0
+
+# MinIO
+minio==7.2.18
+
+# PostgreSQL
+psycopg2-binary==2.9.10

@@ -1,19 +1,27 @@
-from sparkSession import spark_session
-from producer.config.constants import KAFKA_BROKER_URL
-from producer.config.constants import STOCK_QUOTES_TOPIC
+from spark.stream_consumer.consume_data import consume_stream_data
+from Minio_client.minio_writer import MinioWritter
+from producer.utils.minio_client import client
+from producer.config.constants import RAW_DATA_BUCKET,PROCESSED_DATA_BUCKET
+
 
 def main():
-    spark = spark_session()
-    spark.sparkContext.setLogLevel("WARN")
+    stock_quote = consume_stream_data()
+    mini_client = MinioWritter(client=client)
 
-    df = spark.readStream\
-        .format("kafka")\
-        .option("kafks.bootstrap.servers",KAFKA_BROKER_URL)\
-        .option("subscribe",STOCK_QUOTES_TOPIC)\
-        .option("startingOffsets","latest")\
-        .load()
+    # write raw data into minio 
+    mini_client.create_bucket(bucket_name=RAW_DATA_BUCKET)
+    query = (
+        stock_quote.writeStream
+        .format("json")
+        .outputMode("append")
+        .option("path","s3a://bronze/stock_quotes" )
+        .option("checkpointLocation", "s3a://bronze/stock_quotes/checkpoints")
+        .start()
+    )
 
-    print(df)
+    print("Streaming data to MinIO:","stock_quotes")
+
+    query.awaitTermination()
 
 
 if __name__ == "__main__":

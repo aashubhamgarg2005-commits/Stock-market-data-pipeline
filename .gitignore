@@ -24,3 +24,5 @@ storage/
 
 # OS
 .DS_Store
+
+state.json
